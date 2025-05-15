@@ -1,4 +1,4 @@
-package com.fxdrop.fxdropapi.model.entity;
+package com.fxdrop.fxdropapi.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -70,5 +70,16 @@ public class Person {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", cellPhone='" + cellPhone + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", cpf='" + cpf + '\'';
     }
 }
