@@ -16,7 +16,7 @@ public class User extends Person {
     private Long id;
 
     @NotBlank(message = "O campo senha é obrigatório")
-    @Column(length = 20)
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
