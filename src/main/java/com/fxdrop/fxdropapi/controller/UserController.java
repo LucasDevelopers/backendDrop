@@ -1,5 +1,6 @@
 package com.fxdrop.fxdropapi.controller;
 
+import com.fxdrop.fxdropapi.dto.CreateUserDto;
 import com.fxdrop.fxdropapi.dto.LoginDto;
 import com.fxdrop.fxdropapi.dto.UserDto;
 import com.fxdrop.fxdropapi.model.User;
@@ -8,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +37,8 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    @Transactional
+    public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserDto user) {
         try {
             userService.createUser(user);
             return ResponseEntity.status(HttpStatus.CREATED).body("Usuário criado com sucesso!");

@@ -1,6 +1,7 @@
 package com.fxdrop.fxdropapi.dto;
 
 import com.fxdrop.fxdropapi.enums.user.Gender;
+import com.fxdrop.fxdropapi.enums.user.UserType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,6 +17,9 @@ public record CreateUserDto(
 
         @NotNull(message = "Gênero é obrigatório")
         Gender gender,
+
+        @NotNull(message = "O tipo de Usuario é obrigatório")
+        UserType userType,
 
         @NotBlank(message = "Nome é obrigatório")
         String firstName,

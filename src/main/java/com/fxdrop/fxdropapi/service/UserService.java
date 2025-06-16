@@ -1,5 +1,6 @@
 package com.fxdrop.fxdropapi.service;
 
+import com.fxdrop.fxdropapi.dto.CreateUserDto;
 import com.fxdrop.fxdropapi.dto.UserDto;
 import com.fxdrop.fxdropapi.enums.user.Gender;
 import com.fxdrop.fxdropapi.repository.UserRepository;
@@ -17,11 +18,12 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void createUser(User user) {
-        String hashedPassword = PasswordUtils.passwordEncode(user.getPassword());
-        user.setPassword(hashedPassword);
+    public void createUser(CreateUserDto user) {
+        User newUser = fromDto(user);
+        String hashedPassword = PasswordUtils.passwordEncode(newUser.getPassword());
+        newUser.setPassword(hashedPassword);
 
-        userRepository.save(user);
+        userRepository.save(newUser);
     }
 
     public List<UserDto> listAllUser() {
@@ -42,6 +44,22 @@ public class UserService {
                 return user;
             }
         }
-        return null; // login falhou
+        return null;
+    }
+
+    private User fromDto(CreateUserDto dto){
+        User user = new User();
+        user.setLogin(dto.login());
+        user.setPassword(dto.password());
+        user.setGender(dto.gender());
+        user.setUserType(dto.userType());
+        user.setFirstName(dto.firstName());
+        user.setLastName(dto.lastName());
+        user.setEmail(dto.email());
+        user.setCellPhone(dto.cellPhone());
+        user.setTelephone(dto.telephone());
+        user.setCpf(dto.cpf());
+
+        return user;
     }
 }
