@@ -7,8 +7,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT u FROM User u WHERE u.login = :credential OR u.email = :credential")
-    User login(@Param("credential") String credential);
+    User findFirstByLoginOrEmail(String login, String email);
+    User findFirstByEmailOrCpfOrLogin(String email, String cpf, String login);
 
+    @Query("SELECT u FROM User u WHERE u.email = :email OR u.cpf = :cpf OR u.login = :login LIMIT 1")
+    User searchUser(@Param("email") String email, @Param("cpf") String cpf, @Param("login") String login);
 
 }

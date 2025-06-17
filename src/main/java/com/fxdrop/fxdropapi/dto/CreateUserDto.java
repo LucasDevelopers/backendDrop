@@ -31,6 +31,7 @@ public record CreateUserDto(
         @Email(message = "Email inválido")
         String email,
 
+        @NotBlank(message = "Celular tem que enviar meu filho")
         String cellPhone,
 
         String telephone,

@@ -3,6 +3,7 @@ package com.fxdrop.fxdropapi.controller;
 import com.fxdrop.fxdropapi.dto.CreateUserDto;
 import com.fxdrop.fxdropapi.dto.LoginDto;
 import com.fxdrop.fxdropapi.dto.UserDto;
+import com.fxdrop.fxdropapi.exception.LoginException;
 import com.fxdrop.fxdropapi.model.User;
 import com.fxdrop.fxdropapi.service.UserService;
 import jakarta.validation.Valid;
@@ -28,22 +29,19 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginDto loginRequest) {
-        User user = userService.login(loginRequest.getCredential(), loginRequest.getPassword());
-        if (user != null) {
+        try {
+            User user = userService.login(loginRequest.getCredential(), loginRequest.getPassword());
             return ResponseEntity.ok(user);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha inválidos.");
+        } catch (LoginException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
 
     @PostMapping("/create")
     @Transactional
     public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserDto user) {
-        try {
-            userService.createUser(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Usuário criado com sucesso!");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao criar usuário: " + e.getMessage());
-        }
+        userService.createUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Usuário criado com sucesso!");
     }
+
 }

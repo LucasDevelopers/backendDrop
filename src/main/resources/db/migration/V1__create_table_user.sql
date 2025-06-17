@@ -1,0 +1,22 @@
+CREATE TABLE user (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    login VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    gender VARCHAR(1) NOT NULL,
+    user_type VARCHAR(50) NOT NULL,
+    first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30),
+    email VARCHAR(100) NOT NULL UNIQUE,
+    cell_phone VARCHAR(100) NOT NULL,
+    telephone VARCHAR(100),
+    cpf VARCHAR(11) NOT NULL UNIQUE,
+    log_active VARCHAR(10) NOT NULL,
+    confirm_email VARCHAR(255),
+    date_registration DATETIME NOT NULL,
+    id_registration BIGINT,
+    date_change DATETIME,
+    id_change BIGINT,
+    date_deletion DATETIME,
+    id_deletion BIGINT,
+    enterprise_id BIGINT NULL
+);

@@ -15,32 +15,26 @@ public class User extends Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O campo senha é obrigatório")
     @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @NotNull(message="O campo gênero é obrigatório")
     @Column(nullable = false)
     private Gender gender;
 
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "O campo Tipo de usuário é obrigatório")
     @Column(nullable = false)
     private UserType userType;
 
-    @NotBlank(message = "O campo login é obrigatório")
     @Column(unique = true, nullable = false)
     private String login;
 
-    @NotBlank(message = "O status do Usuário é obrigatório")
     @Column(nullable = false)
     private String logActive;
 
     @Column(nullable = true)
     private String confirmEmail;
 
-    @NotNull(message = "A data de criação é obrigatória")
     @Column(nullable = false)
     private LocalDateTime dateRegistration;
 
@@ -58,6 +52,17 @@ public class User extends Person {
 
     @Column(nullable = true)
     private Long idDeletion;
+
+    @Column(nullable = true)
+    private String enterprise_id;
+
+    public String getEnterprise_id() {
+        return enterprise_id;
+    }
+
+    public void setEnterprise_id(String enterprise_id) {
+        this.enterprise_id = enterprise_id;
+    }
 
     public Long getId() {
         return id;
