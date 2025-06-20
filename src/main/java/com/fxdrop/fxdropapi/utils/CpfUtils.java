@@ -1,14 +1,18 @@
 package com.fxdrop.fxdropapi.utils;
 
-public class CpfValidate {
+public class CpfUtils {
+
+    public static String cleanCpf(String cpf){
+        // Remove caracteres não numéricos (pontos, traços, etc)
+        cpf = cpf.replaceAll("\\D", "");
+
+        return cpf;
+    }
 
     public static boolean cpfValidate(String cpf) {
         if (cpf == null) {
             return false;
         }
-
-        // Remove caracteres não numéricos (pontos, traços, etc)
-        cpf = cpf.replaceAll("\\D", "");
 
         // Verifica se tem 11 dígitos
         if (cpf.length() != 11) {

@@ -8,6 +8,8 @@ import com.fxdrop.fxdropapi.model.User;
 import com.fxdrop.fxdropapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,8 +25,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/getAllUsers")
-    public List<UserDto> getAllUser(){
-        return userService.listAllUser();
+    public Page<UserDto> getAllUser(Pageable pagination){
+        return userService.listAllUser(pagination);
     }
 
     @PostMapping("/login")
