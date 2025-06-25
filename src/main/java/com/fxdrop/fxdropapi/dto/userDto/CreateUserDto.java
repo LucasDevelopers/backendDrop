@@ -15,6 +15,10 @@ public record CreateUserDto(
         @Size(min = 6, message = "Senha deve ter no mínimo 6 caracteres")
         String password,
 
+        @NotBlank(message = "Confirmação de senha é obrigatória")
+        @Size(min = 6, message = "Confirmação de senha deve ter no mínimo 6 caracteres")
+        String validatePassword,
+
         @NotNull(message = "Gênero é obrigatório")
         Gender gender,
 
@@ -37,5 +41,7 @@ public record CreateUserDto(
         String telephone,
 
         @NotBlank(message = "CPF é obrigatório")
-        String cpf
+        String cpf,
+
+        Long idCreate
 ) {}

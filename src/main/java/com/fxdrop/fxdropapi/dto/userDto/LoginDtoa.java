@@ -1,4 +1,4 @@
-package com.fxdrop.fxdropapi.dto;
+package com.fxdrop.fxdropapi.dto.userDto;
 
 import jakarta.validation.constraints.NotBlank;
 
