@@ -1,11 +1,14 @@
 package com.fxdrop.fxdropapi.service;
 
-import com.fxdrop.fxdropapi.dto.CreateUserDto;
-import com.fxdrop.fxdropapi.dto.UserDto;
+import com.fxdrop.fxdropapi.dto.userDto.CreateUserDto;
+import com.fxdrop.fxdropapi.dto.userDto.UpdatePasswordDto;
+import com.fxdrop.fxdropapi.dto.userDto.UpdateUserDto;
+import com.fxdrop.fxdropapi.dto.userDto.UserDto;
 import com.fxdrop.fxdropapi.exception.CreateUserException;
 import com.fxdrop.fxdropapi.exception.LoginException;
 import com.fxdrop.fxdropapi.repository.UserRepository;
 import com.fxdrop.fxdropapi.utils.CpfUtils;
+import com.fxdrop.fxdropapi.utils.Functions;
 import com.fxdrop.fxdropapi.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,8 +17,6 @@ import org.springframework.stereotype.Service;
 import com.fxdrop.fxdropapi.model.User;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -25,6 +26,10 @@ public class UserService {
 
     //Função para Criar usuario
     public void createUser(CreateUserDto user) {
+        if (!user.password().equals(user.validatePassword())) {
+            throw new CreateUserException("As senhas não coincidem.");
+        }
+
         User newUser = fromDto(user);
 
         String cleanCpf = CpfUtils.cleanCpf(newUser.getCpf());
@@ -52,7 +57,9 @@ public class UserService {
 
             String hashedPassword = PasswordUtils.passwordEncode(newUser.getPassword());
             newUser.setPassword(hashedPassword);
-            newUser.setDateRegistration(LocalDateTime.now());
+            String cellPhone = Functions.cleanString(newUser.getCellPhone());
+            newUser.setCellPhone(cellPhone);
+            newUser.setDateCreate(LocalDateTime.now());
             newUser.setLogActive("true");
             userRepository.save(newUser);
 
@@ -61,8 +68,33 @@ public class UserService {
         throw new CreateUserException("CPF Inválido");
     }
 
+    public void updateUser(UpdateUserDto userDto){
+        User user = userRepository.getReferenceById(userDto.id());
+
+        if (userDto.gender() != null) {
+            user.setGender(userDto.gender());
+        }
+        if (userDto.userType() != null) {
+            user.setUserType(userDto.userType());
+        }
+        if (userDto.firstName() != null) {
+            user.setFirstName(userDto.firstName());
+        }
+        if (userDto.lastName() != null) {
+            user.setLastName(userDto.lastName());
+        }
+        if (userDto.cellPhone() != null) {
+            String cellPhone = Functions.cleanString(userDto.cellPhone());
+            user.setCellPhone(cellPhone);
+        }
+        if (userDto.telephone() != null) {
+            user.setTelephone(userDto.telephone());
+        }
+
+    }
+
     // Função de login
-    public User login(String credential, String rawPassword) {
+    public UserDto login(String credential, String rawPassword) {
         User user = userRepository.findFirstByLoginOrEmail(credential, credential);
         if (user == null) {
             throw new LoginException("Usuário não encontrado.");
@@ -73,7 +105,8 @@ public class UserService {
             throw new LoginException("Usuário ou senha inválido.");
         }
 
-        return user;
+        return new UserDto(user);
+
     }
 
     //Listar todos os usuarios
@@ -96,4 +129,24 @@ public class UserService {
 
         return user;
     }
+
+    public void updatePassword(UpdatePasswordDto dto) {
+        User user = userRepository.getReferenceById(dto.id());
+
+        if (!PasswordUtils.verifyPassword(dto.currentPassword(), user.getPassword())) {
+            throw new CreateUserException("Senha atual inválida.");
+        }
+
+        if (PasswordUtils.verifyPassword(dto.newPassword(), user.getPassword())) {
+            throw new CreateUserException("A nova senha não pode ser igual a atual.");
+        }
+
+        if (!dto.newPassword().equals(dto.validateNewPassword())) {
+            throw new CreateUserException("Nova senha e confirmação não coincidem.");
+        }
+
+        String hashedNewPassword = PasswordUtils.passwordEncode(dto.newPassword());
+        user.setPassword(hashedNewPassword);
+    }
+
 }

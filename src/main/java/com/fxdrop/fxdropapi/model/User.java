@@ -36,16 +36,16 @@ public class User extends Person {
     private String confirmEmail;
 
     @Column(nullable = false)
-    private LocalDateTime dateRegistration;
+    private LocalDateTime dateCreate;
 
     @Column(nullable = true)
-    private Long idRegistration;
+    private Long idCreate;
 
     @Column(nullable = true)
-    private LocalDateTime dateChange;
+    private LocalDateTime dateUpdate;
 
     @Column(nullable = true)
-    private Long idChange;
+    private Long idUpdate;
 
     @Column(nullable = true)
     private LocalDateTime dateDeletion;
@@ -53,19 +53,12 @@ public class User extends Person {
     @Column(nullable = true)
     private Long idDeletion;
 
-    @Column(nullable = true)
-    private String enterprise_id;
-
-    public String getEnterprise_id() {
-        return enterprise_id;
-    }
-
-    public void setEnterprise_id(String enterprise_id) {
-        this.enterprise_id = enterprise_id;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPassword() {
@@ -116,36 +109,36 @@ public class User extends Person {
         this.confirmEmail = confirmEmail;
     }
 
-    public LocalDateTime getDateRegistration() {
-        return dateRegistration;
+    public LocalDateTime getDateCreate() {
+        return dateCreate;
     }
 
-    public void setDateRegistration(LocalDateTime dateRegistration) {
-        this.dateRegistration = dateRegistration;
+    public void setDateCreate(LocalDateTime dateCreate) {
+        this.dateCreate = dateCreate;
     }
 
-    public Long getIdRegistration() {
-        return idRegistration;
+    public Long getIdCreate() {
+        return idCreate;
     }
 
-    public void setIdRegistration(Long idRegistration) {
-        this.idRegistration = idRegistration;
+    public void setIdCreate(Long idCreate) {
+        this.idCreate = idCreate;
     }
 
-    public LocalDateTime getDateChange() {
-        return dateChange;
+    public LocalDateTime getDateUpdate() {
+        return dateUpdate;
     }
 
-    public void setDateChange(LocalDateTime dateChange) {
-        this.dateChange = dateChange;
+    public void setDateUpdate(LocalDateTime dateUpdate) {
+        this.dateUpdate = dateUpdate;
     }
 
-    public Long getIdChange() {
-        return idChange;
+    public Long getIdUpdate() {
+        return idUpdate;
     }
 
-    public void setIdChange(Long idChange) {
-        this.idChange = idChange;
+    public void setIdUpdate(Long idUpdate) {
+        this.idUpdate = idUpdate;
     }
 
     public LocalDateTime getDateDeletion() {
@@ -164,23 +157,15 @@ public class User extends Person {
         this.idDeletion = idDeletion;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                super.toString() +
-                "id=" + id +
-                ", password='" + password + '\'' +
-                ", gender=" + gender +
-                ", userType=" + userType +
-                ", login='" + login + '\'' +
-                ", logActive='" + logActive + '\'' +
-                ", confirmEmail='" + confirmEmail + '\'' +
-                ", dateRegistration=" + dateRegistration +
-                ", idRegistration=" + idRegistration +
-                ", dateChange=" + dateChange +
-                ", idChange=" + idChange +
-                ", dateDeletion=" + dateDeletion +
-                ", idDeletion=" + idDeletion +
-                '}';
+    public String getCompanyId() {
+        return companyId;
     }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
+
+    @Column(nullable = true)
+    private String companyId;
+
 }

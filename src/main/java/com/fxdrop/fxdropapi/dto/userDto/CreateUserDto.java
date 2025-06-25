@@ -1,4 +1,4 @@
-package com.fxdrop.fxdropapi.dto;
+package com.fxdrop.fxdropapi.dto.userDto;
 
 import com.fxdrop.fxdropapi.enums.user.Gender;
 import com.fxdrop.fxdropapi.enums.user.UserType;

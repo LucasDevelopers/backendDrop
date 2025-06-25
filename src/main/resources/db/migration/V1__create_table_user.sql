@@ -12,11 +12,11 @@ CREATE TABLE user (
     cpf VARCHAR(11) NOT NULL UNIQUE,
     log_active VARCHAR(10) NOT NULL,
     confirm_email VARCHAR(255),
-    date_registration DATETIME NOT NULL,
-    id_registration BIGINT,
-    date_change DATETIME,
-    id_change BIGINT,
+    date_create DATETIME NOT NULL,
+    id_create BIGINT,
+    date_update DATETIME,
+    id_update BIGINT,
     date_deletion DATETIME,
     id_deletion BIGINT,
-    enterprise_id BIGINT NULL
+    company_id BIGINT NULL
 );

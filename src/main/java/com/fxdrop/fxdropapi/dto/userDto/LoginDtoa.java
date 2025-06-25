@@ -2,7 +2,7 @@ package com.fxdrop.fxdropapi.dto.userDto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class LoginDto {
+public class LoginDtoa {
     @NotBlank(message = "O campo credential (login ou email) é obrigatório")
     private String credential;
 
