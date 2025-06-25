@@ -3,7 +3,7 @@ CREATE TABLE company (
 
     corporate_reason VARCHAR(100) NOT NULL,
     fantasy_name     VARCHAR(100) NOT NULL,
-    cnpj             VARCHAR(30) NOT NULL,
+    cnpj             VARCHAR(30) NOT NULL UNIQUE,
     ie               VARCHAR(30) NULL DEFAULT NULL,
     cellphone        VARCHAR(11) NOT NULL,
     telephone        VARCHAR(11) NULL DEFAULT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE company (
     zip_code         VARCHAR(10) NOT NULL,
     city             VARCHAR(50) NOT NULL,
     state            VARCHAR(2) NOT NULL,
-    domain           VARCHAR(100) NULL DEFAULT NULL,
+    domain           VARCHAR(20) NULL DEFAULT NULL UNIQUE,
     log_active       CHAR(1) NOT NULL,
 
     type_company ENUM('fxAdmin', 'fxCompany') NOT NULL DEFAULT 'fxCompany',

@@ -1,6 +1,6 @@
 package com.fxdrop.fxdropapi.controller;
 
-import com.fxdrop.fxdropapi.dto.userDto.CreateUserDto;
+import com.fxdrop.fxdropapi.dto.companyDto.CreateCompanyDto;
 import com.fxdrop.fxdropapi.service.CompanyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

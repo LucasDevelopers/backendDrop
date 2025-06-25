@@ -43,7 +43,6 @@ public class UserService {
             if(searchUser != null){
                 if (searchUser.getEmail().equals(newUser.getEmail())){
                     throw new CreateUserException("E-mail já cadastrado.");
-
                 }
 
                 if(searchUser.getCpf().equals(newUser.getCpf())){

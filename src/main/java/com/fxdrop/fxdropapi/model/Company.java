@@ -2,6 +2,7 @@ package com.fxdrop.fxdropapi.model;
 
 import com.fxdrop.fxdropapi.enums.company.TypeCompany;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +19,7 @@ public class Company {
     @Column(nullable = false)
     private String fantasyName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String cnpj;
 
     @Column(nullable = true)
@@ -51,7 +52,7 @@ public class Company {
     @Column(nullable = false)
     private String state;
 
-    @Column(nullable = true)
+    @Column(nullable = true, unique = true)
     private String domain;
 
     @Column(nullable = false)
@@ -60,6 +61,10 @@ public class Company {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeCompany typeCompany;
+
+    public TypeCompany getTypeCompany() {
+        return typeCompany;
+    }
 
     public Long getId() {
         return id;
@@ -187,10 +192,6 @@ public class Company {
 
     public void setLogActive(String logActive) {
         this.logActive = logActive;
-    }
-
-    public TypeCompany getTypeCompany() {
-        return typeCompany;
     }
 
     public void setTypeCompany(TypeCompany typeCompany) {

@@ -1,6 +1,7 @@
 package com.fxdrop.fxdropapi.controller;
 
 import com.fxdrop.fxdropapi.dto.userDto.*;
+import com.fxdrop.fxdropapi.exception.CreateUserException;
 import com.fxdrop.fxdropapi.exception.LoginException;
 import com.fxdrop.fxdropapi.service.UserService;
 import jakarta.validation.Valid;
@@ -20,18 +21,15 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/getAllUsers")
-    public Page<UserDto> getAllUser(Pageable pagination){
-        return userService.listAllUser(pagination);
+    public ResponseEntity<Page<UserDto>> getAllUser(Pageable pagination){
+        var page = userService.listAllUser(pagination);
+        return ResponseEntity.ok(page);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginDto loginRequest) {
-        try {
-            UserDto userDto = userService.login(loginRequest.credential(), loginRequest.password());
-            return ResponseEntity.ok(userDto);
-        } catch (LoginException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        }
+        UserDto userDto = userService.login(loginRequest.credential(), loginRequest.password());
+        return ResponseEntity.ok(userDto);
     }
 
 
@@ -46,7 +44,7 @@ public class UserController {
     @Transactional
     public ResponseEntity<?> updateUser(@Valid @RequestBody UpdateUserDto user){
         userService.updateUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Usuário criado com sucesso!");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Usuário Atualizado com sucesso!");
     }
 
     @PutMapping("/update-password")
@@ -54,6 +52,12 @@ public class UserController {
     public ResponseEntity<?> updatePassword(@Valid @RequestBody UpdatePasswordDto dto) {
         userService.updatePassword(dto);
         return ResponseEntity.ok("Senha alterada com sucesso.");
+    }
+
+    @DeleteMapping("/delete-user/{id}")
+    @Transactional
+    public ResponseEntity<?> deleteUser(@PathVariable Long id){
+        return ResponseEntity.noContent().build();
     }
 
 }
