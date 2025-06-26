@@ -13,6 +13,7 @@ import com.fxdrop.fxdropapi.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.fxdrop.fxdropapi.model.User;
 
@@ -23,6 +24,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     //Função para Criar usuario
     public void createUser(CreateUserDto user) {
@@ -54,7 +58,7 @@ public class UserService {
                 }
             }
 
-            String hashedPassword = PasswordUtils.passwordEncode(newUser.getPassword());
+            String hashedPassword = passwordEncoder.encode(newUser.getPassword());
             newUser.setPassword(hashedPassword);
             String cellPhone = Functions.cleanString(newUser.getCellPhone());
             newUser.setCellPhone(cellPhone);
@@ -89,22 +93,6 @@ public class UserService {
         if (userDto.telephone() != null) {
             user.setTelephone(userDto.telephone());
         }
-
-    }
-
-    // Função de login
-    public UserDto login(String credential, String rawPassword) {
-        User user = userRepository.findFirstByLoginOrEmail(credential, credential);
-        if (user == null) {
-            throw new LoginException("Usuário não encontrado.");
-        }
-
-        boolean senhaValida = PasswordUtils.verifyPassword(rawPassword, user.getPassword());
-        if (!senhaValida) {
-            throw new LoginException("Usuário ou senha inválido.");
-        }
-
-        return new UserDto(user);
 
     }
 

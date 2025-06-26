@@ -26,13 +26,6 @@ public class UserController {
         return ResponseEntity.ok(page);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginDto loginRequest) {
-        UserDto userDto = userService.login(loginRequest.credential(), loginRequest.password());
-        return ResponseEntity.ok(userDto);
-    }
-
-
     @PostMapping("/create")
     @Transactional
     public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserDto user) {
